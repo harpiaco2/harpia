@@ -53,7 +53,7 @@ const FormSchema = z.object({
   }),
 });
 
-export default function FormInfra() {
+export default function FormImpacto() {
   const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),

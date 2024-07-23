@@ -39,7 +39,7 @@ const FormSchema = z.object({
   }),
 });
 
-export default function FormProblem() {
+export default function FormFotos() {
   const router = useRouter();
   const notifySucess = () => toast.success("Wow so easy!");
 

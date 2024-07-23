@@ -40,7 +40,7 @@ const FormSchema = z.object({
   }),
 });
 
-export default function FormProblem() {
+export default function FormMedidas() {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof FormSchema>>({
