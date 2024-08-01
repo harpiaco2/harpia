@@ -1,7 +1,7 @@
 import { db } from "@/firebaseConfig";
 import { doc, setDoc, addDoc, getDoc, updateDoc, deleteDoc, collection, serverTimestamp } from "firebase/firestore"; 
 
-export async function setProblem(formId: string, questionId: string, resp: string | number) {
+export async function setProblem(formId: any, questionId: any, resp: any) {
     try {
         const problemsSetDocRef = doc(db, "questions", "problems");
 
@@ -17,7 +17,7 @@ export async function setProblem(formId: string, questionId: string, resp: strin
     }
 };
 
-export async function addProblem(formId: string, questionId: string, resp: string | number) {
+export async function addProblem(formId: any, questionId: any, resp: any) {
     try {
         const problemsAddCollectionRef = collection(db, "problems");
 
@@ -50,7 +50,7 @@ export async function getProblem() {
     }
 };
 
-export async function updateProblem(docId: string, resp: string | number) {
+export async function updateProblem(docId: any, resp: any) {
     try {
         const problemsUpdtDocRef = doc(db, "questions/problems", docId);
         await updateDoc(problemsUpdtDocRef, {
@@ -64,7 +64,7 @@ export async function updateProblem(docId: string, resp: string | number) {
     }
 };
 
-export async function deleteProblem(docId: string) {
+export async function deleteProblem(docId: any) {
     try {
         const problemsDelDocRef = doc(db, "questions/problems", docId);
         await deleteDoc(

@@ -40,6 +40,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { setAccessibilitie } from "@/app/api/data/accessibilitiesFunctions";
 
 const FormSchema = z.object({
   option6: z.string().nonempty({
@@ -60,8 +61,12 @@ export default function FormAcessibilidade() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log(JSON.stringify(data).length);
+
+    await setAccessibilitie(null, null, data.option6);
+
+    await setAccessibilitie(null, null, data.option7);
 
     toast({
       title: "You submitted the following values:",

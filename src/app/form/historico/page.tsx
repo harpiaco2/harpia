@@ -30,6 +30,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { setHistorical } from "@/app/api/data/historicalFunctions";
 
 const FormSchema = z.object({
   option9: z.string().nonempty({
@@ -51,8 +52,12 @@ export default function FormHistorico() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log(data);
+
+    await setHistorical(null, null, data.option9);
+    await setHistorical(null, null, data.option10);
+
     toast({
       title: "You submitted the following values:",
       description: (

@@ -30,6 +30,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { setMeasure } from "@/app/api/data/measuresFunctions";
 
 const FormSchema = z.object({
   option11: z.string().nonempty({
@@ -51,8 +52,12 @@ export default function FormMedidas() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log(data);
+
+    await setMeasure(null, null, data.option11);
+    await setMeasure(null, null, data.question5);
+
     toast({
       title: "You submitted the following values:",
       description: (

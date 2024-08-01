@@ -1,7 +1,7 @@
 import { db } from "@/firebaseConfig";
 import { doc, setDoc, addDoc, getDoc, updateDoc, deleteDoc, collection, serverTimestamp } from "firebase/firestore"; 
 
-export async function setEmergency(formId: string, questionId: string, resp: string | number) {
+export async function setEmergency(formId: any, questionId: any, resp: any) {
     try {
         const emergencySetDocRef = doc(db, "questions", "emergency");
 
@@ -17,7 +17,7 @@ export async function setEmergency(formId: string, questionId: string, resp: str
     }
 };
 
-export async function addEmergency(formId: string, questionId: string, resp: string | number) {
+export async function addEmergency(formId: any, questionId: any, resp: any) {
     try {
         const emergencyAddCollectionRef = collection(db, "emergency");
 
@@ -50,7 +50,7 @@ export async function getEmergency() {
     }
 };
 
-export async function updateEmergency(docId: string, resp: string | number) {
+export async function updateEmergency(docId: any, resp: any) {
     try {
         const emergencyUpdtDocRef = doc(db, "questions/emergency", docId);
         await updateDoc(emergencyUpdtDocRef, {
@@ -64,7 +64,7 @@ export async function updateEmergency(docId: string, resp: string | number) {
     }
 };
 
-export async function deleteEmergency(docId: string) {
+export async function deleteEmergency(docId: any) {
     try {
         const emergencyDelDocRef = doc(db, "questions/emergency", docId);
         await deleteDoc(

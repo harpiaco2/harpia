@@ -38,6 +38,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { addInfra, setInfra } from "@/app/api/data/inraestructureFunctions";
 
 const FormSchema = z.object({
   question1: z.string().min(3, {
@@ -58,8 +59,14 @@ export default function FormInfra() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log('Iniciando...');
     console.log(JSON.stringify(data).length);
+
+    await setInfra(null, null, data.selectField);
+    await setInfra(null, null, data.question1);
+
+    console.log('Sucesso!');
 
     toast({
       title: "You submitted the following values:",
@@ -81,7 +88,7 @@ export default function FormInfra() {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form onSubmit={form.handleSubmit(onSubmit)} method="POST">
             <div className="flex justify-center flex-col m-3 gap-2">
               <FormField
                 control={form.control}

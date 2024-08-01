@@ -1,7 +1,7 @@
 import { db } from "@/firebaseConfig";
 import { doc, setDoc, addDoc, getDoc, updateDoc, deleteDoc, collection, serverTimestamp } from "firebase/firestore"; 
 
-export async function setInfra(formId: string, questionId: string, resp: string | number) {
+export async function setInfra(formId: any, questionId: any, resp: any) {
     try {
         const infraestructureSetDocRef = doc(db, "questions", "infraestructure");
 
@@ -17,7 +17,7 @@ export async function setInfra(formId: string, questionId: string, resp: string 
     }
 };
 
-export async function addInfra(formId: string, questionId: string, resp: string | number) {
+export async function addInfra(formId: any, questionId: any, resp: any) {
     try {
         const infraestructureAddCollectionRef = collection(db, "infraestructure");
 
@@ -50,7 +50,7 @@ export async function getInfra() {
     }
 };
 
-export async function updateInfra(docId: string, resp: string | number) {
+export async function updateInfra(docId: any, resp: any) {
     try {
         const infraestructureUpdtDocRef = doc(db, "questions/infraestructure", docId);
         await updateDoc(infraestructureUpdtDocRef, {
@@ -64,7 +64,7 @@ export async function updateInfra(docId: string, resp: string | number) {
     }
 };
 
-export async function deleteInfra(docId: string) {
+export async function deleteInfra(docId: any) {
     try {
         const infraestructureDelDocRef = doc(db, "questions/infraestructure", docId);
         await deleteDoc(

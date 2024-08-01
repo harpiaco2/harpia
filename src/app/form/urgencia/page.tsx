@@ -40,6 +40,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { setEmergency } from "@/app/api/data/emergencyFunctions";
 
 const FormSchema = z.object({
   option4: z.string().nonempty({
@@ -60,8 +61,11 @@ export default function FormUrgencia() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log(JSON.stringify(data).length);
+
+    await setEmergency(null, null, data.option4);
+    await setEmergency(null, null, data.option5);
 
     toast({
       title: "You submitted the following values:",

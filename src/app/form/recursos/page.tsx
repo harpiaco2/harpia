@@ -40,6 +40,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { setResource } from "@/app/api/data/resourcesFunctions";
 
 const FormSchema = z.object({
   option8: z.string().nonempty({
@@ -60,8 +61,11 @@ export default function FormRecursos() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log(JSON.stringify(data).length);
+
+    await setResource(null, null, data.question4);
+    await setResource(null, null, data.option8);
 
     toast({
       title: "You submitted the following values:",

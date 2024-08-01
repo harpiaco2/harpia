@@ -40,6 +40,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { setImpact } from "@/app/api/data/impactsFunctions";
 
 const FormSchema = z.object({
   option1: z.string().nonempty({
@@ -64,8 +65,12 @@ export default function FormImpacto() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log(JSON.stringify(data).length);
+
+    await setImpact(null, null, data.option1);
+    await setImpact(null, null, data.option2);
+    await setImpact(null, null, data.option3);
 
     toast({
       title: "You submitted the following values:",

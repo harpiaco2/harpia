@@ -1,7 +1,7 @@
 import { db } from "@/firebaseConfig";
 import { doc, setDoc, addDoc, getDoc, updateDoc, deleteDoc, collection, serverTimestamp } from "firebase/firestore"; 
 
-export async function setMeasure(formId: string, questionId: string, resp: string | number) {
+export async function setMeasure(formId: any, questionId: any, resp: any) {
     try {
         const measuresSetDocRef = doc(db, "questions", "measures");
 
@@ -17,7 +17,7 @@ export async function setMeasure(formId: string, questionId: string, resp: strin
     }
 };
 
-export async function addMeasure(formId: string, questionId: string, resp: string | number) {
+export async function addMeasure(formId: any, questionId: any, resp: any) {
     try {
         const measuresAddCollectionRef = collection(db, "measures");
 
@@ -50,7 +50,7 @@ export async function getMeasure() {
     }
 };
 
-export async function updateMeasure(docId: string, resp: string | number) {
+export async function updateMeasure(docId: any, resp: any) {
     try {
         const measuresUpdtDocRef = doc(db, "questions/measures", docId);
         await updateDoc(measuresUpdtDocRef, {
@@ -64,7 +64,7 @@ export async function updateMeasure(docId: string, resp: string | number) {
     }
 };
 
-export async function deleteMeasure(docId: string) {
+export async function deleteMeasure(docId: any) {
     try {
         const measuresDelDocRef = doc(db, "questions/measures", docId);
         await deleteDoc(

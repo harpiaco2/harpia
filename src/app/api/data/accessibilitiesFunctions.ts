@@ -1,7 +1,7 @@
 import { db } from "@/firebaseConfig";
 import { doc, setDoc, addDoc, getDoc, updateDoc, deleteDoc, collection, serverTimestamp } from "firebase/firestore"; 
 
-export async function setAccessibilitie(formId: string, questionId: string, resp: string | number) {
+export async function setAccessibilitie(formId: any, questionId: any, resp: any) {
     try {
         const accessibilitiesSetDocRef = doc(db, "questions", "accessibilities");
 
@@ -17,7 +17,7 @@ export async function setAccessibilitie(formId: string, questionId: string, resp
     }
 };
 
-export async function addAccessibilitie(formId: string, questionId: string, resp: string | number) {
+export async function addAccessibilitie(formId: any, questionId: any, resp: any) {
     try {
         const accessibilitiesAddCollectionRef = collection(db, "accessibilities");
 
@@ -50,7 +50,7 @@ export async function getAccessibilitie() {
     }
 };
 
-export async function updateAccessibilitie(docId: string, resp: string | number) {
+export async function updateAccessibilitie(docId: any, resp: any) {
     try {
         const accessibilitiesUpdtDocRef = doc(db, "questions/accessibilities", docId);
         await updateDoc(accessibilitiesUpdtDocRef, {
@@ -64,7 +64,7 @@ export async function updateAccessibilitie(docId: string, resp: string | number)
     }
 };
 
-export async function deleteAccessibilitie(docId: string) {
+export async function deleteAccessibilitie(docId: any) {
     try {
         const accessibilitiesDelDocRef = doc(db, "questions/accessibilities", docId);
         await deleteDoc(

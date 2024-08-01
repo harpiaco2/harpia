@@ -1,7 +1,7 @@
 import { db } from "@/firebaseConfig";
 import { doc, setDoc, addDoc, getDoc, updateDoc, deleteDoc, collection, serverTimestamp } from "firebase/firestore"; 
 
-export async function setImpact(formId: string, questionId: string, resp: string | number) {
+export async function setImpact(formId: any, questionId: any, resp: any) {
     try {
         const impactsSetDocRef = doc(db, "questions", "impacts");
 
@@ -17,7 +17,7 @@ export async function setImpact(formId: string, questionId: string, resp: string
     }
 };
 
-export async function addImpact(formId: string, questionId: string, resp: string | number) {
+export async function addImpact(formId: any, questionId: any, resp: any) {
     try {
         const impactsAddCollectionRef = collection(db, "impacts");
 
@@ -50,7 +50,7 @@ export async function getImpact() {
     }
 };
 
-export async function updateImpact(docId: string, resp: string | number) {
+export async function updateImpact(docId: any, resp: any) {
     try {
         const impactsUpdtDocRef = doc(db, "questions/impacts", docId);
         await updateDoc(impactsUpdtDocRef, {
@@ -64,7 +64,7 @@ export async function updateImpact(docId: string, resp: string | number) {
     }
 };
 
-export async function deleteImpact(docId: string) {
+export async function deleteImpact(docId: any) {
     try {
         const impactsDelDocRef = doc(db, "questions/impacts", docId);
         await deleteDoc(
