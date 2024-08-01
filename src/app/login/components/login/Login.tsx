@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from 'react'; // Adicione esta linha no início do arquivo
+
 import {
   Card,
   CardContent,
@@ -8,8 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-import validator from "validator";
 
 import { useForm } from "react-hook-form";
 
@@ -38,6 +38,12 @@ const formSchema = z.object({
 });
 
 const Login = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -54,6 +60,10 @@ const Login = () => {
     } catch (error) {
       console.error("Erro ao enviar o formulário:", error);
     }
+  }
+
+  if (!isClient) {
+    return null; // Ou um loading spinner se preferir
   }
 
   return (

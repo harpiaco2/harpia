@@ -1,7 +1,6 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
 import Login from "./components/login/Login";
 import SignUp from "./components/signup/SignUp";
 
@@ -21,3 +20,4 @@ export default function Acesso() {
     </Tabs>
   );
 }
+
