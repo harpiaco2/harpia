@@ -19,11 +19,16 @@ import {
 export async function registerUser(userName: string, email: string, password: string, phone: string) {
     const auth = getAuth();
     try {
+        
+        if (password.length < 6) {
+            throw new Error("A senha deve ter pelo menos 6 caracteres.");
+        }
+
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
         const usersCollectionRef = collection(db, "users");
-        await addDoc(usersCollectionRef, {
+        await setDoc(doc(usersCollectionRef, user.uid), {
             uid: user.uid,
             userName: userName,
             email: email,
@@ -32,9 +37,10 @@ export async function registerUser(userName: string, email: string, password: st
         });
 
         console.log(`User created and saved successfully. - user:${userName} | 'users' - method: create`);
+        return user; 
     } catch (error) {
         console.error("Error creating user: ", error);
-        throw error; // Propaga o erro para que o frontend possa lidar com ele
+        throw error; 
     }
 }
 
@@ -48,28 +54,10 @@ export async function loginUser(email: string, password: string) {
         return user;
     } catch (error) {
         console.error("Error logging in: ", error);
-        throw error; // Propaga o erro para que o frontend possa lidar com ele
+        throw error; 
     }
 }
 
-// Função para obter dados do usuário do Firestore
-export async function getUser(docId: string) {
-    try {
-        const usersGetDocRef = doc(db, "users", docId);
-        const usersDocSnap = await getDoc(usersGetDocRef);
-
-        if (usersDocSnap.exists()) {
-            console.log(`Successful data retrieval. | 'users' - method: get`);
-            return usersDocSnap.data();
-        } else {
-            console.log("No such document!");
-            return null;
-        }
-    } catch (error) {
-        console.error("Error retrieving data: ", error);
-        throw error; // Propaga o erro para que o frontend possa lidar com ele
-    }
-}
 
 // Função para atualizar dados do usuário no Firestore
 export async function updateUser(docId: string, userName: string, email: string, phone: string) {
@@ -85,7 +73,7 @@ export async function updateUser(docId: string, userName: string, email: string,
         console.log(`Successful update. - docId: ${docId} | 'users' - method: update`);
     } catch (error) {
         console.error("Error updating document: ", error);
-        throw error; // Propaga o erro para que o frontend possa lidar com ele
+        throw error;
     }
 }
 
@@ -97,6 +85,6 @@ export async function deleteUser(docId: string) {
         console.log(`Deletion successful. - docId: ${docId} | 'users' - method: delete`);
     } catch (error) {
         console.error("Error deleting document: ", error);
-        throw error; // Propaga o erro para que o frontend possa lidar com ele
+        throw error; 
     }
 }

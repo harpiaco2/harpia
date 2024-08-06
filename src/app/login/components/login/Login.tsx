@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -12,16 +12,17 @@ import { loginUser, registerUser } from '@/app/api/data/usersFunctions';
 
 const loginSchema = z.object({
   emailLogin: z.string().email({ message: 'Seu email está inválido' }),
-  passwordLogin: z.string().min(4, { message: 'A senha deve ter pelo menos 4 caracteres.' }),
+  passwordLogin: z.string().min(6, { message: 'A senha deve ter pelo menos 6 caracteres.' }),
 });
 
 const registerSchema = z.object({
   emailRegister: z.string().email({ message: 'Seu email está inválido' }),
-  passwordRegister: z.string().min(4, { message: 'A senha deve ter pelo menos 4 caracteres.' }),
+  passwordRegister: z.string().min(6, { message: 'A senha deve ter pelo menos 6 caracteres.' }),
 });
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -40,6 +41,10 @@ const Login = () => {
       passwordRegister: "",
     },
   });
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleLogin = async (data: z.infer<typeof loginSchema>) => {
     try {
@@ -60,11 +65,19 @@ const Login = () => {
       setSuccessMessage('Cadastro bem-sucedido! Faça login para continuar.');
       setErrorMessage(null);
       setIsLogin(true); // Retorna ao login após o cadastro
-    } catch (error) {
-      setErrorMessage('Erro ao cadastrar. Tente novamente.');
+    } catch (error: any) {
+      if (error.message === "A senha deve ter pelo menos 6 caracteres.") {
+        setErrorMessage('A senha deve ter pelo menos 6 caracteres.');
+      } else {
+        setErrorMessage('Erro ao cadastrar. Tente novamente.');
+      }
       setSuccessMessage(null);
     }
   };
+
+  if (!isMounted) {
+    return null; // Renderiza nada até que o componente esteja montado no cliente
+  }
 
   return (
     <Card>
@@ -125,26 +138,26 @@ const Login = () => {
               <FormField
                 control={formRegister.control}
                 name="emailRegister"
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input placeholder="Seu email" {...field} />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage>{fieldState.error?.message}</FormMessage>
                   </FormItem>
                 )}
               />
               <FormField
                 control={formRegister.control}
                 name="passwordRegister"
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <FormItem>
                     <FormLabel>Senha</FormLabel>
                     <FormControl>
                       <Input type="password" placeholder="Digite sua senha" {...field} />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage>{fieldState.error?.message}</FormMessage>
                   </FormItem>
                 )}
               />
