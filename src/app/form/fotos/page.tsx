@@ -18,8 +18,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Input } from "@/components/ui/input";
 
-import { useToast } from "@/components/ui/use-toast";
-
 import { useRouter } from "next/navigation";
 
 import { useForm } from "react-hook-form";
@@ -33,27 +31,43 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+// Import the uploadImage function from the relevant file
+import { uploadImage } from "@/app/api/data/images";
+
 const FormSchema = z.object({
-  picture1: z.string().nonempty({
-    message: "Selecione uma opção valida.",
-  }),
+  picture1: z
+    .instanceof(File)
+    .refine((file) => file.size > 0, {
+      message: "Selecione uma opção válida.",
+    }),
 });
 
 export default function FormFotos() {
   const router = useRouter();
-  const notifySucess = () => toast.success("Wow so easy!");
+  const notifySuccess = () => toast.success("Upload realizado com sucesso!");
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      picture1: "",
+      picture1: undefined,
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
-    notifySucess();
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    try {
+      const file = data.picture1;
+      const formId = "uniqueFormId"; // Substitua por um ID único relevante
+      if (file) {
+        const downloadURL = await uploadImage(file, formId);
+        console.log('Image uploaded successfully:', downloadURL);
+        notifySuccess();
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      toast.error("Erro ao realizar o upload da imagem.");
+    }
   }
+
   return (
     <Card className="flex flex-col mt-9 m-3">
       <CardHeader>
@@ -75,7 +89,15 @@ export default function FormFotos() {
                       Por favor, anexe fotos do local afetado.
                     </FormLabel>
                     <FormControl>
-                      <Input id="picture" type="file" {...field} />
+                      <Input
+                        id="picture"
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          field.onChange(file);
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -92,6 +114,7 @@ export default function FormFotos() {
           </form>
         </Form>
       </CardContent>
+      <ToastContainer />
     </Card>
   );
 }

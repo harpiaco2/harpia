@@ -1,82 +1,102 @@
 import { db } from "@/firebaseConfig";
-import { doc, setDoc, addDoc, getDoc, updateDoc, deleteDoc, collection, serverTimestamp } from "firebase/firestore"; 
+import {
+    doc,
+    setDoc,
+    addDoc,
+    getDoc,
+    updateDoc,
+    deleteDoc,
+    collection,
+    serverTimestamp
+} from "firebase/firestore";
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    getAuth
+} from "firebase/auth";
 
-export async function setUser(userName: string, email: string, password: string, phone: string) {
+// Função para criar usuário no Firebase Authentication e salvar no Firestore
+export async function registerUser(userName: string, email: string, password: string, phone: string) {
+    const auth = getAuth();
     try {
-        const usersSetDocRef = doc(db, "users", "users");
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
 
-        await setDoc(usersSetDocRef, {
-            userName: "",
-            email: "",
-            password: "",
-            phone: "", 
-            dateTimeInsertion: serverTimestamp()
-        });
-        console.log(`Insertion successful. - user:${userName} | 'users' - method: set`);
-    } catch (error) {
-        console.error("Error setting document: ", error);
-    }
-};
-
-export async function addUser(userName: string, email: string, password: string, phone: string) {
-    try {
-        const usersAddCollectionRef = collection(db, "users");
-
-        const docRef = await addDoc(usersAddCollectionRef, {
+        const usersCollectionRef = collection(db, "users");
+        await addDoc(usersCollectionRef, {
+            uid: user.uid,
             userName: userName,
             email: email,
-            password: password,
-            phone: phone, 
+            phone: phone,
             dateTimeInsertion: serverTimestamp()
         });
-        console.log(`Insertion successful. - user:${userName} | 'users' - method: add`);
-        return docRef;
-    } catch (error) {
-        console.error("Error adding document: ", error);
-    }
-};
 
-export async function getUser() {
+        console.log(`User created and saved successfully. - user:${userName} | 'users' - method: create`);
+    } catch (error) {
+        console.error("Error creating user: ", error);
+        throw error; // Propaga o erro para que o frontend possa lidar com ele
+    }
+}
+
+// Função para login do usuário usando Firebase Authentication
+export async function loginUser(email: string, password: string) {
+    const auth = getAuth();
     try {
-        const usersGetDocRef = doc(db, "users");
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        console.log(`Login successful. - user:${user.email} | 'users' - method: login`);
+        return user;
+    } catch (error) {
+        console.error("Error logging in: ", error);
+        throw error; // Propaga o erro para que o frontend possa lidar com ele
+    }
+}
+
+// Função para obter dados do usuário do Firestore
+export async function getUser(docId: string) {
+    try {
+        const usersGetDocRef = doc(db, "users", docId);
         const usersDocSnap = await getDoc(usersGetDocRef);
 
         if (usersDocSnap.exists()) {
-            console.log(`Successful data recovery. | 'users' - method: get`);
+            console.log(`Successful data retrieval. | 'users' - method: get`);
             return usersDocSnap.data();
         } else {
             console.log("No such document!");
+            return null;
         }
     } catch (error) {
         console.error("Error retrieving data: ", error);
+        throw error; // Propaga o erro para que o frontend possa lidar com ele
     }
-};
+}
 
-export async function updateUser(docId: string, userName: string, email: string, password: string, phone: string) {
+// Função para atualizar dados do usuário no Firestore
+export async function updateUser(docId: string, userName: string, email: string, phone: string) {
     try {
         const usersUpdtDocRef = doc(db, "users", docId);
         await updateDoc(usersUpdtDocRef, {
             userName: userName,
             email: email,
-            password: password,
-            phone: phone, 
+            phone: phone,
             dateTimeUpdate: serverTimestamp()
         });
 
         console.log(`Successful update. - docId: ${docId} | 'users' - method: update`);
     } catch (error) {
         console.error("Error updating document: ", error);
+        throw error; // Propaga o erro para que o frontend possa lidar com ele
     }
-};
+}
 
+// Função para deletar usuário no Firestore
 export async function deleteUser(docId: string) {
     try {
         const usersDelDocRef = doc(db, "users", docId);
-        await deleteDoc(
-            usersDelDocRef
-        );
+        await deleteDoc(usersDelDocRef);
         console.log(`Deletion successful. - docId: ${docId} | 'users' - method: delete`);
     } catch (error) {
         console.error("Error deleting document: ", error);
+        throw error; // Propaga o erro para que o frontend possa lidar com ele
     }
-};
+}

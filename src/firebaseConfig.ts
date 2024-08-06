@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth} from "firebase/auth";
+import { getStorage } from "firebase/storage";
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -16,4 +17,5 @@ const firebaseConfig = {
 // Inicializa o Firebase
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
-export const auth = getAuth(app); // Exporta a instância de autenticação
+export const auth = getAuth(app); 
+export const storage = getStorage(app);
