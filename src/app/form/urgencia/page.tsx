@@ -75,7 +75,7 @@ export default function FormUrgencia() {
         </pre>
       ),
     });
-    router.push("/form/acessibilidade");
+    router.push("/form/emergency");
   }
   return (
     <Card className="flex flex-col mt-9 m-3">

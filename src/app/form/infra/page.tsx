@@ -38,7 +38,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { addInfra, setInfra } from "@/app/api/data/inraestructureFunctions";
+import { addInfra, setInfra } from "@/app/api/data/inrastructureFunctions";
 
 const FormSchema = z.object({
   question1: z.string().min(3, {
@@ -63,19 +63,29 @@ export default function FormInfra() {
     console.log('Iniciando...');
     console.log(JSON.stringify(data).length);
 
-    await setInfra(null, null, data.selectField);
-    await setInfra(null, null, data.question1);
+    try {
+      // Substitute with actual form data
+      const response = await addInfra("testFormId", "testQuestionId", "testResponse");
 
-    console.log('Sucesso!');
+      // Check if response is valid
+      if (response) {
+          console.log('Sucesso!');
+      } else {
+          console.error('Falha na inserção.');
+      }
 
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+      toast({
+          title: "You submitted the following values:",
+          description: (
+              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                  <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+              </pre>
+          ),
+      });
+      router.push("/form/infraestructure");
+  } catch (error) {
+      console.error("Erro na submissão:", error);
+  }
     router.push("/form/problems");
   }
   return (

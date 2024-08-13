@@ -1,13 +1,13 @@
 import { db } from "@/firebaseConfig";
 import { doc, setDoc, addDoc, getDoc, updateDoc, deleteDoc, collection, serverTimestamp } from "firebase/firestore"; 
 
-export async function setEmergency(formId: any, questionId: any, resp: any) {
+export async function setEmergency(formId: any, questionText: any, resp: any) {
     try {
         const emergencySetDocRef = doc(db, "questions", "emergency");
 
         await setDoc(emergencySetDocRef, {
             formId: formId,
-            questionId: questionId,
+            questionText: questionText,
             response: resp,
             dateTimeInsertion: serverTimestamp()
         });
@@ -17,13 +17,13 @@ export async function setEmergency(formId: any, questionId: any, resp: any) {
     }
 };
 
-export async function addEmergency(formId: any, questionId: any, resp: any) {
+export async function addEmergency(formId: any, questionText: any, resp: any) {
     try {
         const emergencyAddCollectionRef = collection(db, "emergency");
 
         const docRef = await addDoc(emergencyAddCollectionRef, {
             formId: formId,
-            questionId: questionId,
+            questionText: questionText,
             response: resp,
             dateTimeInsertion: serverTimestamp()
         });

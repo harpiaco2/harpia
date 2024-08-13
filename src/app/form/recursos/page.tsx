@@ -40,7 +40,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { setResource } from "@/app/api/data/resourcesFunctions";
+import { setResource } from "@/app/api/data/resourceFunctions";
 
 const FormSchema = z.object({
   option8: z.string().nonempty({
@@ -75,7 +75,7 @@ export default function FormRecursos() {
         </pre>
       ),
     });
-    router.push("/form/historico");
+    router.push("/form/resource");
   }
   return (
     <Card className="flex flex-col mt-9 m-3">

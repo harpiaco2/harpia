@@ -40,7 +40,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { setImpact } from "@/app/api/data/impactsFunctions";
+import { setImpact } from "@/app/api/data/impactFunctions";
 
 const FormSchema = z.object({
   option1: z.string().nonempty({
@@ -80,7 +80,7 @@ export default function FormImpacto() {
         </pre>
       ),
     });
-    router.push("/form/urgencia");
+    router.push("/form/impact");
   }
   return (
     <Card className="flex flex-col mt-9 m-3">

@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { registerUser } from "@/app/api/data/usersFunctions";
+import { registerUser } from "@/app/api/data/userFunctions";
 
 // Definindo o esquema de validação com zod
 const formSchema = z.object({

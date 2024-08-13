@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { loginUser, registerUser } from '@/app/api/data/usersFunctions'; 
+import { loginUser, registerUser } from '@/app/api/data/userFunctions'; 
 
 const loginSchema = z.object({
   emailLogin: z.string().email({ message: 'Seu email está inválido' }),

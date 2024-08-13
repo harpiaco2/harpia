@@ -27,8 +27,8 @@ export async function registerUser(userName: string, email: string, password: st
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        const usersCollectionRef = collection(db, "users");
-        await setDoc(doc(usersCollectionRef, user.uid), {
+        const userCollectionRef = collection(db, "user");
+        await setDoc(doc(userCollectionRef, user.uid), {
             uid: user.uid,
             userName: userName,
             email: email,
@@ -36,7 +36,7 @@ export async function registerUser(userName: string, email: string, password: st
             dateTimeInsertion: serverTimestamp()
         });
 
-        console.log(`User created and saved successfully. - user:${userName} | 'users' - method: create`);
+        console.log(`User created and saved successfully. - user:${userName} | 'user' - method: create`);
         return user; 
     } catch (error) {
         console.error("Error creating user: ", error);
@@ -50,7 +50,7 @@ export async function loginUser(email: string, password: string) {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        console.log(`Login successful. - user:${user.email} | 'users' - method: login`);
+        console.log(`Login successful. - user:${user.email} | 'user' - method: login`);
         return user;
     } catch (error) {
         console.error("Error logging in: ", error);
@@ -62,15 +62,15 @@ export async function loginUser(email: string, password: string) {
 // Função para atualizar dados do usuário no Firestore
 export async function updateUser(docId: string, userName: string, email: string, phone: string) {
     try {
-        const usersUpdtDocRef = doc(db, "users", docId);
-        await updateDoc(usersUpdtDocRef, {
+        const userUpdtDocRef = doc(db, "user", docId);
+        await updateDoc(userUpdtDocRef, {
             userName: userName,
             email: email,
             phone: phone,
             dateTimeUpdate: serverTimestamp()
         });
 
-        console.log(`Successful update. - docId: ${docId} | 'users' - method: update`);
+        console.log(`Successful update. - docId: ${docId} | 'user' - method: update`);
     } catch (error) {
         console.error("Error updating document: ", error);
         throw error;
@@ -80,9 +80,9 @@ export async function updateUser(docId: string, userName: string, email: string,
 // Função para deletar usuário no Firestore
 export async function deleteUser(docId: string) {
     try {
-        const usersDelDocRef = doc(db, "users", docId);
-        await deleteDoc(usersDelDocRef);
-        console.log(`Deletion successful. - docId: ${docId} | 'users' - method: delete`);
+        const userDelDocRef = doc(db, "user", docId);
+        await deleteDoc(userDelDocRef);
+        console.log(`Deletion successful. - docId: ${docId} | 'user' - method: delete`);
     } catch (error) {
         console.error("Error deleting document: ", error);
         throw error; 

@@ -28,7 +28,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { setProblem } from "@/app/api/data/problemsFunctions";
+import { setProblem } from "@/app/api/data/problemFunctions";
 
 const FormSchema = z.object({
   question2: z.string().min(3, {
@@ -64,7 +64,7 @@ export default function FormProblem() {
         </pre>
       ),
     });
-    router.push("/form/impacto");
+    router.push("/form/problem");
   }
   return (
     <Card className="flex flex-col mt-9 m-3">

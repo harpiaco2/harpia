@@ -1,13 +1,13 @@
 import { db } from "@/firebaseConfig";
 import { doc, setDoc, addDoc, getDoc, updateDoc, deleteDoc, collection, serverTimestamp } from "firebase/firestore"; 
 
-export async function setHistorical(formId: any, questionId: any, resp: any) {
+export async function setHistorical(formId: any, questionText: any, resp: any) {
     try {
         const historicalSetDocRef = doc(db, "questions", "historical");
 
         await setDoc(historicalSetDocRef, {
             formId: formId,
-            questionId: questionId,
+            questionText: questionText,
             response: resp,
             dateTimeInsertion: serverTimestamp()
         });
@@ -17,13 +17,13 @@ export async function setHistorical(formId: any, questionId: any, resp: any) {
     }
 };
 
-export async function addHistorical(formId: any, questionId: any, resp: any) {
+export async function addHistorical(formId: any, questionText: any, resp: any) {
     try {
         const historicalAddCollectionRef = collection(db, "historical");
 
         const docRef = await addDoc(historicalAddCollectionRef, {
             formId: formId,
-            questionId: questionId,
+            questionText: questionText,
             response: resp,
             dateTimeInsertion: serverTimestamp()
         });

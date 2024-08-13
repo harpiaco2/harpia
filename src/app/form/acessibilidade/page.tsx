@@ -40,7 +40,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { setAccessibilitie } from "@/app/api/data/accessibilitiesFunctions";
+import { setAccessibilitie } from "@/app/api/data/accessibilitieFunctions";
 
 const FormSchema = z.object({
   option6: z.string().nonempty({
@@ -64,9 +64,9 @@ export default function FormAcessibilidade() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log(JSON.stringify(data).length);
 
-    await setAccessibilitie(null, null, data.option6);
+    await setAccessibilitie(null, "", data.option6);
 
-    await setAccessibilitie(null, null, data.option7);
+    await setAccessibilitie(null, "", data.option7);
 
     toast({
       title: "You submitted the following values:",
@@ -76,7 +76,7 @@ export default function FormAcessibilidade() {
         </pre>
       ),
     });
-    router.push("/form/recursos");
+    router.push("/form/accessibilitie");
   }
   return (
     <Card className="flex flex-col mt-9 m-3">

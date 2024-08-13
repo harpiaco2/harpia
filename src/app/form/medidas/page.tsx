@@ -30,7 +30,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { setMeasure } from "@/app/api/data/measuresFunctions";
+import { setMeasure } from "@/app/api/data/measureFunctions";
 
 const FormSchema = z.object({
   option11: z.string().nonempty({
@@ -66,7 +66,7 @@ export default function FormMedidas() {
         </pre>
       ),
     });
-    router.push("/form/fotos");
+    router.push("/form/measure");
   }
   return (
     <Card className="flex flex-col mt-9 m-3">
