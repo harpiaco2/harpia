@@ -66,7 +66,7 @@ export default function FormHistorico() {
         </pre>
       ),
     });
-    router.push("/form/historical");
+    router.push("/form/fotos");
   }
   return (
     <Card className="flex flex-col mt-9 m-3">

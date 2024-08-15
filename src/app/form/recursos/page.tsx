@@ -75,7 +75,7 @@ export default function FormRecursos() {
         </pre>
       ),
     });
-    router.push("/form/resource");
+    router.push("/form/historico");
   }
   return (
     <Card className="flex flex-col mt-9 m-3">

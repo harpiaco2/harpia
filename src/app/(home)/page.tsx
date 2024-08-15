@@ -1,9 +1,11 @@
 import Image from "next/image";
+import Login from "../login/components/login/Login";
 
 export default function Home() {
   return (
-    <>
-      <h1></h1>
-    </>
+    <div>
+      {" "}
+      <Login />
+    </div>
   );
 }

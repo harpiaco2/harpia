@@ -64,7 +64,7 @@ export default function FormProblem() {
         </pre>
       ),
     });
-    router.push("/form/problem");
+    router.push("/form/impacto");
   }
   return (
     <Card className="flex flex-col mt-9 m-3">

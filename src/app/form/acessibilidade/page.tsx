@@ -76,7 +76,7 @@ export default function FormAcessibilidade() {
         </pre>
       ),
     });
-    router.push("/form/accessibilitie");
+    router.push("/form/recursos");
   }
   return (
     <Card className="flex flex-col mt-9 m-3">

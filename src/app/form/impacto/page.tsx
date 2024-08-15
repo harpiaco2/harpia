@@ -80,7 +80,7 @@ export default function FormImpacto() {
         </pre>
       ),
     });
-    router.push("/form/impact");
+    router.push("/form/urgencia");
   }
   return (
     <Card className="flex flex-col mt-9 m-3">

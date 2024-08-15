@@ -61,6 +61,7 @@ export default function FormFotos() {
         const downloadURL = await uploadImage(file, formId);
         console.log('Image uploaded successfully:', downloadURL);
         notifySuccess();
+        router.push("/dashboard");
       }
     } catch (error) {
       console.error("Error uploading image:", error);
