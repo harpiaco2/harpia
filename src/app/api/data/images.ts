@@ -1,7 +1,7 @@
 import { storage } from "@/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-export async function uploadImage(file: File, formId: string): Promise<string | null> {
+export async function uploadImage(file: File, formId: string | undefined): Promise<string | null> {
     const storageRef = ref(storage, `images/${formId}/${file.name}`);
     
     try {

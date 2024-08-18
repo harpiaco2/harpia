@@ -39,6 +39,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { addInfra, setInfra } from "@/app/api/data/inrastructureFunctions";
+import { getFormId } from "@/globalState";
 
 const FormSchema = z.object({
   question1: z.string().min(3, {
@@ -60,19 +61,10 @@ export default function FormInfra() {
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log('Iniciando...');
-    console.log(JSON.stringify(data).length);
 
     try {
-      // Substitute with actual form data
-      const response = await addInfra("testFormId", "testQuestionId", "testResponse");
-
-      // Check if response is valid
-      if (response) {
-          console.log('Sucesso!');
-      } else {
-          console.error('Falha na inserção.');
-      }
+      const resp_selectedField = await addInfra(getFormId(), "", data.selectField);
+      const resp_question1 = await addInfra(getFormId(), "", data.question1);
 
       toast({
           title: "You submitted the following values:",

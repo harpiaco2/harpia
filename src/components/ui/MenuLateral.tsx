@@ -13,9 +13,21 @@ import {
 } from "@/components/ui/sheet";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { addForm } from "@/app/api/data/formFunctions";
+import { setFormId } from "@/globalState";
+
 
 export default function MenuLateral() {
   const router = useRouter();
+
+  async function createForm() {
+    try {
+      const form = await addForm();
+      setFormId(form);
+    } catch (error) {
+      console.error("Error adding form: ", error);
+    }
+  };
 
   return (
     <Sheet>
@@ -34,15 +46,18 @@ export default function MenuLateral() {
             onClick={() => router.push("/dashboard")}
             variant="ghost"
             className="flex items-center justify-start gap-3"
-          >
+            >
             <FaHome size="25px" />
             Home
           </Button>
           <Button
-            onClick={() => router.push("/form/infra")}
+            onClick={() => {
+              createForm();
+              router.push("/form/infra");
+            }}
             variant="ghost"
             className="flex items-center justify-start gap-3"
-          >
+            >
             <BsFillFileEarmarkSpreadsheetFill size="25px" />
             Formulário
           </Button>

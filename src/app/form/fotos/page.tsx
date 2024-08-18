@@ -33,6 +33,7 @@ import { Button } from "@/components/ui/button";
 
 // Import the uploadImage function from the relevant file
 import { uploadImage } from "@/app/api/data/images";
+import { getFormId } from "@/globalState";
 
 const FormSchema = z.object({
   picture1: z
@@ -56,9 +57,8 @@ export default function FormFotos() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       const file = data.picture1;
-      const formId = "uniqueFormId"; // Substitua por um ID único relevante
       if (file) {
-        const downloadURL = await uploadImage(file, formId);
+        const downloadURL = await uploadImage(file, getFormId());
         console.log('Image uploaded successfully:', downloadURL);
         notifySuccess();
         router.push("/dashboard");

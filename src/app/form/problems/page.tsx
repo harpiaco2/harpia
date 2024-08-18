@@ -28,7 +28,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { setProblem } from "@/app/api/data/problemFunctions";
+import { addProblem } from "@/app/api/data/problemFunctions";
+import { getFormId } from "@/globalState";
 
 const FormSchema = z.object({
   question2: z.string().min(3, {
@@ -53,8 +54,8 @@ export default function FormProblem() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log(data);
 
-    await setProblem(null, null, data.question2);
-    await setProblem(null, null, data.question3);
+    await addProblem(getFormId(), null, data.question2);
+    await addProblem(getFormId(), null, data.question3);
 
     toast({
       title: "You submitted the following values:",

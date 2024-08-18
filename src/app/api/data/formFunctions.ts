@@ -1,40 +1,40 @@
 import { db } from "@/firebaseConfig";
 import { doc, setDoc, addDoc, getDoc, updateDoc, deleteDoc, collection, serverTimestamp } from "firebase/firestore"; 
+import { getUser } from "../auth/user";
 
-export async function setForm(formId: any, questionText: any, resp: any) {
+export async function setForm(userInserction: any) {
     try {
         const formSetDocRef = doc(db, "form");
 
         await setDoc(formSetDocRef, {
-            formId: formId,
-            questionText: questionText,
-            response: resp,
+            userInserction: userInserction,
             dateTimeInsertion: serverTimestamp()
         });
-        console.log(`Insertion successful. - form:${formId} | 'form' - method: set`);
+
+        const documentPath = formSetDocRef.path;
+        console.log(`Insertion successful. - form:${documentPath} | 'form' - method: set`);
     } catch (error) {
         console.error("Error setting document: ", error);
     }
 };
 
-export async function addForm(formId: any, questionText: any, resp: any) {
+export async function addForm() {
     try {
         const formAddCollectionRef = collection(db, "form");
 
         const docRef = await addDoc(formAddCollectionRef, {
-            formId: formId,
-            questionText: questionText,
-            response: resp,
+            userInserction: getUser(),
             dateTimeInsertion: serverTimestamp()
         });
-        console.log(`Insertion successful. - form:${formId} | 'form' - method: add`);
-        return docRef;
+        const documentPath:string = docRef.path;
+        console.log(`Creation successful. - form:${documentPath} | 'form' - method: add`);
+        return documentPath;
     } catch (error) {
         console.error("Error adding document: ", error);
     }
 };
 
-export async function geForm() {
+export async function getForm() {
     try {
         const formGetDocRef = doc(db, "form");
         const formDocSnap = await getDoc(formGetDocRef);
@@ -50,11 +50,11 @@ export async function geForm() {
     }
 };
 
-export async function updateForm(docId: any, resp: any) {
+export async function updateForm(docId: any, userUpdate: any) {
     try {
         const formUpdtDocRef = doc(db, "form", docId);
         await updateDoc(formUpdtDocRef, {
-            response: resp,
+            userUpdate: userUpdate,
             dateTimeUpdate: serverTimestamp()
         });
 
