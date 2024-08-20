@@ -1,9 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    basePath: '/harpia', // Ajuste conforme necessário
-    trailingSlash: true,
-    output: 'export', // Configuração para exportação estática
+    output: 'export', // Habilita exportação estática
+    trailingSlash: true, // Adiciona barra no final dos caminhos
   };
   
-  export default nextConfig;
+  export default nextConfig;  
   
