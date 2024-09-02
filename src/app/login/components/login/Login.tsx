@@ -158,12 +158,6 @@ const Login = () => {
                 {errorMessage && (
                   <p className="text-red-600 mt-3">{errorMessage}</p>
                 )}
-                <p className="mt-5">
-                  Não tem uma conta?{" "}
-                  <Button variant="link" onClick={() => setIsLogin(false)}>
-                    Cadastre-se
-                  </Button>
-                </p>
               </CardFooter>
             </form>
           </Form>
